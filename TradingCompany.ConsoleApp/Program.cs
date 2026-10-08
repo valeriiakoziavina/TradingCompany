@@ -21,67 +21,22 @@ class Program
         var roleRepo = new RoleRepository(context);
         var productRepo = new ProductRepository(context);
 
-        bool exit = false;
+        var menu = new ConsoleMenu();
 
-        while (!exit)
-        {
-            Console.Clear();
-            Console.WriteLine("     TRADING COMPANY MANAGEMENT SYSTEM    ");
-            Console.WriteLine("1. View all roles (Read)");
-            Console.WriteLine("2. Add a new role (Create)");
-            Console.WriteLine("3. Delete role by ID (Delete)");
-            Console.WriteLine("4. View all products (Read)");
-            Console.WriteLine("5. Add a new product (Create)");
-            Console.WriteLine("6. Update product price (Update)");
-            Console.WriteLine("0. Exit application");
-            Console.Write("Select an option: ");
+        menu.AddItem("1", "View all roles (Read)", () => ShowAllRoles(roleRepo));
+        menu.AddItem("2", "Add a new role (Create)", () => AddRole(roleRepo));
+        menu.AddItem("3", "Delete role by ID (Delete)", () => DeleteRole(roleRepo));
+        menu.AddItem("4", "View all products (Read)", () => ShowAllProducts(productRepo));
+        menu.AddItem("5", "Add a new product (Create)", () => AddProduct(productRepo));
+        menu.AddItem("6", "Update product price (Update)", () => UpdateProductPrice(productRepo));
 
-            var choice = Console.ReadLine();
-
-            Console.WriteLine();
-
-            switch (choice)
-            {
-                case "1":
-                    await ShowAllRoles(roleRepo);
-                    break;
-                case "2":
-                    await AddRole(roleRepo);
-                    break;
-                case "3":
-                    await DeleteRole(roleRepo);
-                    break;
-                case "4":
-                    await ShowAllProducts(productRepo);
-                    break;
-                case "5":
-                    await AddProduct(productRepo);
-                    break;
-                case "6":
-                    await UpdateProductPrice(productRepo);
-                    break;
-                case "0":
-                    exit = true;
-                    Console.WriteLine("Exiting application");
-                    break;
-                default:
-                    Console.WriteLine("Invalid option. Press Enter to continue");
-                    Console.ReadLine();
-                    break;
-            }
-
-            if (!exit && choice != "0")
-            {
-                Console.WriteLine("\nPress Enter to return to the menu");
-                Console.ReadLine();
-            }
-        }
+        await menu.DisplayAndExecuteAsync();
     }
 
 
     private static async Task ShowAllRoles(RoleRepository repo)
     {
-        Console.WriteLine(" ROLE LIST ");
+        Console.WriteLine("ROLE LIST ");
         var roles = await repo.GetAllAsync();
         foreach (var r in roles)
         {
