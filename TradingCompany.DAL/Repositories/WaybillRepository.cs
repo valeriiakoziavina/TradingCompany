@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TradingCompany.Core.Entities;
 using TradingCompany.DAL.Context;
 using TradingCompany.DAL.Interfaces;
@@ -33,4 +33,7 @@ public class WaybillRepository : Repository<Waybill>, IWaybillRepository
 
         return await query.ToListAsync();
     }
+
+    public async Task<bool> ExistsByNumberAsync(string waybillNumber) =>
+        await _context.Waybills.AnyAsync(w => w.WaybillNumber == waybillNumber);
 }

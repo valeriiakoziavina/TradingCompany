@@ -1,0 +1,30 @@
+<Window x:Class="TradingCompany.WPF.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TradingCompany.ViewModels;assembly=TradingCompany.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
+        Title="Trading Company — вхід" Width="380" SizeToContent="Height"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PageBackgroundBrush}"
+        FocusManager.FocusedElement="{Binding ElementName=txtLogin}">
+    <Border Style="{StaticResource Card}" Margin="16">
+        <StackPanel>
+            <TextBlock Style="{StaticResource HeaderText}" Text="Вхід до системи" />
+            <TextBlock Text="Trading Company · служба доставки" Foreground="Gray" Margin="0,2,0,6" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="_Логін:" Target="{Binding ElementName=txtLogin}" />
+            <TextBox x:Name="txtLogin" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="_Пароль:" Target="{Binding ElementName=pwdPassword}" />
+            <PasswordBox x:Name="pwdPassword" />
+
+            <TextBlock Style="{StaticResource ErrorText}" Margin="0,10,0,0" Text="{Binding ErrorMessage}" />
+
+            <Button Style="{StaticResource PrimaryButton}" Content="Увійти" Margin="0,14,14,0"
+                    HorizontalAlignment="Right" IsDefault="True" Command="{Binding LoginCommand}" />
+        </StackPanel>
+    </Border>
+</Window>

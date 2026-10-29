@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TradingCompany.BL\TradingCompany.BL.csproj" />
     <ProjectReference Include="..\TradingCompany.Core\TradingCompany.Core.csproj" />
     <ProjectReference Include="..\TradingCompany.DAL\TradingCompany.DAL.csproj" />
   </ItemGroup>

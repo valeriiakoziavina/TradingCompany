@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace TradingCompany.Core.Entities;
 
 public class ShipmentStatus
 {
+    public const int PendingId = 1;
+    public const int ShippedId = 2;
+
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
 

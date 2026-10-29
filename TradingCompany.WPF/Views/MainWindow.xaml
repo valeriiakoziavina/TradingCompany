@@ -1,0 +1,46 @@
+<Window x:Class="TradingCompany.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TradingCompany.ViewModels;assembly=TradingCompany.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Title="Trading Company" Width="560" Height="340"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PageBackgroundBrush}">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Доставка">
+                <MenuItem Header="_Замовлення на доставку" Command="{Binding OpenDeliveryOrdersCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Обліковий запис">
+                <MenuItem Header="_Вийти" Command="{Binding LogoutCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <Border Style="{StaticResource Card}" Margin="16">
+            <StackPanel>
+                <TextBlock Style="{StaticResource HeaderText}" Text="Головна сторінка" />
+                <TextBlock Margin="0,8,0,0" FontSize="14">
+                    <Run Text="Вітаємо," />
+                    <Run Text="{Binding UserName, Mode=OneWay}" FontWeight="SemiBold" />
+                </TextBlock>
+                <TextBlock Margin="0,4,0,0" Foreground="Gray">
+                    <Run Text="Роль:" />
+                    <Run Text="{Binding RoleName, Mode=OneWay}" />
+                </TextBlock>
+
+                <StackPanel Margin="0,16,0,0" Visibility="{Binding IsDeliveryManager, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Text="Відкрийте «Доставка → Замовлення на доставку», щоб працювати із замовленнями." TextWrapping="Wrap" />
+                    <Button Style="{StaticResource PrimaryButton}" Content="Замовлення на доставку" Margin="0,10,0,0"
+                            HorizontalAlignment="Left" Command="{Binding OpenDeliveryOrdersCommand}" />
+                </StackPanel>
+
+                <TextBlock Style="{StaticResource ErrorText}" Margin="0,16,0,0" Text="{Binding AccessMessage}" />
+
+                <Button Content="Вийти" Margin="0,16,0,0" HorizontalAlignment="Left" Command="{Binding LogoutCommand}" />
+            </StackPanel>
+        </Border>
+    </DockPanel>
+</Window>

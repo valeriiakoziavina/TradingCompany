@@ -1,0 +1,54 @@
+<Window x:Class="TradingCompany.WPF.Views.CreateWaybillWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TradingCompany.ViewModels;assembly=TradingCompany.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:CreateWaybillViewModel}"
+        Title="Нова накладна" Width="460" SizeToContent="Height"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource PageBackgroundBrush}"
+        FocusManager.FocusedElement="{Binding ElementName=txtNumber}">
+
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}" />
+    </Window.InputBindings>
+
+    <Border Style="{StaticResource Card}" Margin="12">
+        <StackPanel>
+            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding OrderNumber, StringFormat=Накладна для замовлення {0}}" />
+            <TextBlock Foreground="Gray" Margin="0,2,0,4">
+                <Run Text="{Binding CustomerName, Mode=OneWay}" />
+                <Run Text="·" />
+                <Run Text="{Binding TotalAmount, Mode=OneWay, StringFormat={}{0:N2} грн}" />
+            </TextBlock>
+
+            <Label Style="{StaticResource FieldLabel}" Content="_Номер накладної:" Target="{Binding ElementName=txtNumber}" />
+            <TextBox x:Name="txtNumber" MaxLength="50" Text="{Binding WaybillNumber, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="Спосіб _оплати:" Target="{Binding ElementName=cmbPayment}" />
+            <ComboBox x:Name="cmbPayment" ItemsSource="{Binding PaymentTypes}" SelectedItem="{Binding PaymentType}" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="Спосіб _доставки:" Target="{Binding ElementName=cmbDelivery}" />
+            <ComboBox x:Name="cmbDelivery" ItemsSource="{Binding DeliveryMethods}" SelectedItem="{Binding DeliveryMethod}" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="_Місто:" Target="{Binding ElementName=txtCity}" />
+            <TextBox x:Name="txtCity" MaxLength="100" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="_Адреса доставки:" Target="{Binding ElementName=txtAddress}" />
+            <TextBox x:Name="txtAddress" MaxLength="200" Text="{Binding DeliveryAddress, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Style="{StaticResource FieldLabel}" Content="При_мітка (необов'язково):" Target="{Binding ElementName=txtNotes}" />
+            <TextBox x:Name="txtNotes" MaxLength="500" Height="60" TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Style="{StaticResource ErrorText}" Margin="0,10,0,0" Text="{Binding ErrorMessage}" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,14,0">
+                <Button Style="{StaticResource PrimaryButton}" Content="Створити" IsDefault="True" Command="{Binding SaveCommand}" />
+                <Button Content="Скасувати" Margin="0" Command="{Binding CancelCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
